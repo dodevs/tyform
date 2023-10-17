@@ -18,6 +18,6 @@
   },
   "dependencies": {},
   "main": "./index.js",
-  "module": "./index.mjs",
+  "module": "./index.js",
   "typings": "./index.d.ts"
 }
