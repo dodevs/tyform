@@ -1,0 +1,24 @@
+{
+    "name": "static",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "examples/static",
+    "tags": [],
+    "targets": {
+        "copy": {
+            "command": "node tools/scripts/copy-dist.mjs form {projectRoot}/tyform",
+            "dependsOn": [
+                { "projects": "form", "target": "build" }
+            ]
+        },
+        "serve": {
+            "executor": "nx:run-commands",
+            "dependsOn": [ "copy" ],
+            "options": {
+                "commands": [
+                    "http-server -c-1 examples/static"
+                ]
+            }
+        }
+    }
+}

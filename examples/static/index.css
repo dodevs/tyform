@@ -1,0 +1,33 @@
+:root {
+    --error-color: #ff4b4b;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    max-width: 500px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    margin-top: 5px;
+}
+
+input.invalid {
+    border: 0.1em solid var(--error-color)
+}
+
+small {
+    color: var(--error-color);
+};
+
+button {
+    width: fit-content;
+    width: -moz-fit-content;
+}
