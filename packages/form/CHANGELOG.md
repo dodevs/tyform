@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/dodevs/tyform/compare/form-v1.0.0...form-v1.0.1) (2023-10-17)
+
+
+### Bug Fixes
+
+* correct entry file on package.json ([56e2d0b](https://github.com/dodevs/tyform/commit/56e2d0bccd08718a54e79e29ec8f68117488c2ca))
+
 # 1.0.0 (2023-10-17)
 
 
