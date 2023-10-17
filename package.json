@@ -106,6 +106,7 @@
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
     "@swc/helpers": "~0.5.2",
+    "@theunderscorer/nx-semantic-release": "^2.6.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "rxjs": "~7.8.0",

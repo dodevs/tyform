@@ -32,6 +32,13 @@
           "packages/form/package.json"
         ]
       }
+    },
+    "semantic-releade": {
+      "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+      "options": {
+        "buildTarget": "${PROJECT_NAME}:build",
+        "outputPath": "dist/packages/${PROJECT_NAME}"
+      }
     }
   },
   "tags": []

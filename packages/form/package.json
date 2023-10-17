@@ -1,6 +1,21 @@
 {
   "name": "tyform",
-  "version": "0.1.0",
+  "version": "0.0.0",
+  "description": "tyform is a simple framework agnostic form build ",
+  "private": false,
+  "type": "module",
+  "author": {
+    "name": "Douglas Sousa",
+    "email": "douglass.sousa@outlook.com.br"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dodevs/tyform",
+    "directory": "packages/form"
+  },
   "dependencies": {},
   "main": "./index.js",
   "module": "./index.mjs",
