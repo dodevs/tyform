@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/dodevs/tyform/compare/form-v1.0.1...form-v1.0.2) (2023-10-21)
+
+
+### Bug Fixes
+
+* remove svelte example ([dba88fc](https://github.com/dodevs/tyform/commit/dba88fcc66950af6d3c8cab5c73b5c2b754693a0))
+
 ## [1.0.1](https://github.com/dodevs/tyform/compare/form-v1.0.0...form-v1.0.1) (2023-10-17)
 
 
