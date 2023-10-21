@@ -55,7 +55,7 @@ import { Form, FormBuilder } from 'packages/form/src/types';
       </label>
       <label>
         Phone:
-        <input id="phone-input" type="text"/>
+        <input [class.invalid]="form.Phone.invalid" name="Phone" [(ngModel)]="form.Phone.value" type="text"/>
         <small>{{form.Phone.error.join(', ')}}</small>
       </label>
       <label>
@@ -86,7 +86,6 @@ export class TyformExampleComponent implements OnInit {
       Name: string()
         .required("Name is required"),
       Phone: string()
-        .bind("#phone-input")
         .validate(value => this.PHONE_RGX.test(value)).withMessage('Phone format is invalid'),
       Email: string()
         .validate(value => this.EMAIL_RGX.test(value)).withMessage('Email format is invalid')
