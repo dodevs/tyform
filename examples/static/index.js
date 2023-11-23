@@ -1,4 +1,4 @@
-import { builder, string } from './tyform/index.mjs';
+import { builder, string } from './tyform/index.js';
 
 const phone_rgx = /(\d{2})(\d)(\d{4})(\d{4})/;
 const email_rgx = /([\w_.]+)@(\w+\.\w+)/;
