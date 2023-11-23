@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/dodevs/tyform/compare/form-v1.0.2...form-v1.1.0) (2023-11-23)
+
+
+### Features
+
+* specific default value for premises ([53aeb4a](https://github.com/dodevs/tyform/commit/53aeb4af31f02dec905349b815ec2cf1486ff205))
+
 ## [1.0.2](https://github.com/dodevs/tyform/compare/form-v1.0.1...form-v1.0.2) (2023-10-21)
 
 
