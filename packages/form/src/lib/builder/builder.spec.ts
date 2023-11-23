@@ -165,6 +165,19 @@ describe('builder', () => {
       contactForm.Name.value = name;
     })
 
+    it('Form item should emit changes', () => {
+      const callback = vi.fn(item => item);
+
+      const contactForm = builder<Contact>()
+        .build();
+
+      contactForm.Name.subscribe(callback);
+      contactForm.Name.value = "Nathan";
+      
+      expect(callback).toBeCalled();
+
+    })
+
     it('Builder values should return current state', () => {
       const contactBuilder = builder<Contact>();
 
