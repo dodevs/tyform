@@ -1,9 +1,10 @@
 import { builder as tyform, string } from 'tyform';
 import { LitElement, css, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 
-import './tyinput/tyinput.element';
-import './tyinput/tyerror.element';
+import './tyerror/tyerror.element';
+import type { Form, FormItem } from 'packages/form/src/types';
 
 interface Contact {
   Name: string;
@@ -31,8 +32,15 @@ export class TyForm extends LitElement {
       flex-direction: column;
     }
 
-    ty-input {
+    input {
       margin-top: 5px;
+      border-radius: 5px;
+
+      &.invalid {
+        border-width: 0.1em;
+        border-style: solid;
+        border-color: #ff4b4b
+      }
     }
 
     button {
@@ -42,6 +50,9 @@ export class TyForm extends LitElement {
 
   @state()
   private invalid = false;
+
+  @state()
+  private form!: Form<Contact>;
 
   render() {
     const builder = tyform<Contact>({
@@ -60,7 +71,7 @@ export class TyForm extends LitElement {
       Email: 'jao.miguel@hotmail.com'
     })
 
-    const form = builder.build();
+    this.form = builder.build();
 
     builder.subscribe(form => {
       this.invalid = Object.values(form).reduce((acc, cur) => acc || cur.invalid, false);
@@ -71,25 +82,31 @@ export class TyForm extends LitElement {
       const values = builder.values();
       console.log(values)
     }
+    
+    const HandleInput = (item: FormItem<unknown>) => {
+      return (e: InputEvent) => {
+        item.value = (e.target as HTMLInputElement).value
+      }
+    }
 
     return html`
       <form>
         <label>
           Name:
-          <ty-input .item=${form.Name}></ty-input>
-          <ty-error .item=${form.Name}></ty-error>
+          <input class="${classMap({ invalid: this.form.Name.invalid })}" type="text" .value=${this.form.Name.value} @input=${HandleInput(this.form.Name)}>
+          <ty-error .item=${this.form.Name}></ty-error>
         </label>
 
         <label>
           Phone:
-          <ty-input .item=${form.Phone}></ty-input>
-          <ty-error .item=${form.Phone}></ty-error>
+          <input class="${classMap({ invalid: this.form.Phone.invalid })}" type="text" .value=${this.form.Phone.value} @input=${HandleInput(this.form.Phone)}>
+          <ty-error .item=${this.form.Phone}></ty-error>
         </label>
 
         <label>
           Email:
-          <ty-input .item=${form.Email}></ty-input>
-          <ty-error .item=${form.Email}></ty-error>
+          <input class="${classMap({ invalid: this.form.Email.invalid })}" type="text" .value=${this.form.Email.value} @input=${HandleInput(this.form.Email)}>
+          <ty-error .item=${this.form.Email}></ty-error>
         </label>
 
         <button .disabled=${this.invalid} @click=${Submit}>SUBMIT</button>

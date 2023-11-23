@@ -4,6 +4,7 @@
     "outDir": "../../dist/out-tsc",
     "types": ["node"],
     "useDefineForClassFields": false,
+    "experimentalDecorators": true,
   },
   "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts"],
   "include": ["src/**/*.ts"]
