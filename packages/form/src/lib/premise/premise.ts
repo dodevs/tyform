@@ -1,7 +1,8 @@
 import { FormOptions, FormOptionsChain, FormOptionsChainConstructor, ValidationMap, WithBindErrorOption, WithValidationMessageOption } from '../../types';
 
-export const t = <T>(): FormOptionsChain<T> => {
+export const t = <T>(defaultValue: T | undefined = undefined): FormOptionsChain<T> => {
     const options: FormOptions<T> = {};
+    options.value = defaultValue;
 
     const Premise = function(this: FormOptionsChain<T>) {
         this.value = (value: T) => {
@@ -97,8 +98,8 @@ export const t = <T>(): FormOptionsChain<T> => {
     return new Premise();
 }
 
-export const string = t<string>;
-export const number = t<number>;
-export const boolean = t<boolean>;
-export const date = t<Date>;
-export const array = <T>() => t<T[]>;
+export const string = () => t<string>('');
+export const number = () => t<number>();
+export const boolean = () => t<boolean>(false);
+export const date = () => t<Date>();
+export const array = <T>() => t<T[]>([]);
