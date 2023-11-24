@@ -16,6 +16,10 @@
     "url": "https://github.com/dodevs/tyform",
     "directory": "packages/form"
   },
+  "exports": {
+    ".": "./index.js",
+    "./types": "./types/index.d.ts"
+  },
   "dependencies": {},
   "main": "./index.js",
   "module": "./index.js",
