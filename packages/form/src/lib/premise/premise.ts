@@ -1,10 +1,12 @@
-import { FormOptions, FormOptionsChain, FormOptionsChainConstructor, ValidationMap, WithBindErrorOption, WithValidationMessageOption } from '../../types';
+import { Form, FormOptions, FormOptionsChain, FormOptionsChainConstructor, ValidationMap, WithBindErrorOption, WithValidationMessageOption } from '../../types';
 
-export const t = <T>(defaultValue: T | undefined = undefined): FormOptionsChain<T> => {
-    const options: FormOptions<T> = {};
+export const t = <T, O>(defaultValue: T | undefined = undefined): FormOptionsChain<T, O> => {
+    const options: FormOptions<T, O> = {
+        dependents: {}
+    };
     options.value = defaultValue;
 
-    const Premise = function(this: FormOptionsChain<T>) {
+    const Premise = function(this: FormOptionsChain<T, O>) {
         this.value = (value: T) => {
             options.value = value;
             return this;
@@ -16,7 +18,7 @@ export const t = <T>(defaultValue: T | undefined = undefined): FormOptionsChain<
             if (!options.validate)
                 options.validate = [];
 
-            const validationMap: ValidationMap<T> = { fn: value => !!value };
+            const validationMap: ValidationMap<T, O> = { fn: value => !!value };
 
             if (message)
                 validationMap.message = message;
@@ -26,15 +28,15 @@ export const t = <T>(defaultValue: T | undefined = undefined): FormOptionsChain<
             return this;
         }
 
-        this.validate = fn => {
+        this.validate = (fn, deps) => {
 
             if (!options.validate)
                 options.validate = [];
 
-            const validationMap: ValidationMap<T> = { fn: value => !value || fn(value) }
+            const validationMap: ValidationMap<T, O> = { fn: (value, target) => !value || fn(value, target), deps }
             options.validate.push(validationMap);
 
-            const withValidationMessage: WithValidationMessageOption<T> = {
+            const withValidationMessage: WithValidationMessageOption<T, O> = {
                 withMessage: (message: string) => {
                     if (!options.validate)
                         options.validate = [];
@@ -67,7 +69,7 @@ export const t = <T>(defaultValue: T | undefined = undefined): FormOptionsChain<
 
             options.bindings.input = element as HTMLInputElement;
 
-            const withBindError: WithBindErrorOption<T> = {
+            const withBindError: WithBindErrorOption<T, O> = {
                 withErrorOn: selector => {
                     if (!options.bindings)
                         options.bindings = {}
@@ -87,19 +89,19 @@ export const t = <T>(defaultValue: T | undefined = undefined): FormOptionsChain<
         }
 
         this.transform = fn => {
-            options.transform = fn;
+            options.transform = fn
             return this;
         }
 
-    } as unknown as FormOptionsChainConstructor<T>
+    } as unknown as FormOptionsChainConstructor<T, O>
 
     Premise.prototype.options = options;
 
     return new Premise();
 }
 
-export const string = () => t<string>('');
-export const number = () => t<number>();
-export const boolean = () => t<boolean>(false);
-export const date = () => t<Date>();
-export const array = <T>() => t<T[]>([]);
+export const string = <O = undefined>() => t<string, Form<O>>('');
+export const number = <O = undefined>() => t<number, Form<O>>();
+export const boolean = <O = undefined>() => t<boolean, Form<O>>(false);
+export const date = <O = undefined>() => t<Date, Form<O>>();
+export const array = <T, O = undefined>() => t<T[], Form<O>>([]);

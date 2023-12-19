@@ -17,5 +17,5 @@ export interface FormBuilder<T> {
 export type FormBuilderConstructor<T> = {new (config?: FormConfig<T>): FormBuilder<T>}
 
 export type FormConfig<T> = {
-    [P in keyof T]+?: FormOptionsChain<T[P]>
+    [P in keyof T]+?: FormOptionsChain<T[P], Form<T> | undefined>
 }

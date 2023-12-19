@@ -82,7 +82,27 @@ describe('builder', () => {
       expect(form.Email.invalid).toBe(true)
     })
 
-    it('Ivalid form item should have errors', () => {
+    it('Validation dependencies should trigger a new validation', () => {
+      const contactBuilder = builder<Contact>({
+        Email: string<Contact>().validate((value, target) => {
+          if (value && target?.Name.value)
+            return value.includes(target.Name.value);
+          return true;
+        }, ['Name'])
+      });
+
+      const form = contactBuilder.build();
+
+      expect(form.Email.invalid).toBe(false);
+      form.Email.value = 'joão@email.com';
+      expect(form.Email.invalid).toBe(false);
+      form.Name.value = 'john';
+      expect(form.Email.invalid).toBe(true);
+      form.Name.value = 'joão';
+      expect(form.Email.invalid).toBe(false);
+    })
+
+    it('Invalid form item should have errors', () => {
       const form = builder<Contact>({
         Email: string()
           .validate(email => /(.+)@(.+)/.test(email)).withMessage('Invalid email')

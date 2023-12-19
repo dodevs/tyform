@@ -16,11 +16,11 @@ export function builder<T>(config?: FormConfig<T>): FormBuilder<T> {
         } as unknown as FormConstructor<T>;
 
         const getOptions = (formKey: keyof T) => {
-            let options!: FormOptions<T[keyof T]>;
+            let options!: FormOptions<T[keyof T], Form<T>>;
 
             const keyOptions = config?.[formKey as keyof T];
             if (keyOptions != undefined)
-                options = Reflect.get(keyOptions, 'options') as FormOptions<T[keyof T]>;
+                options = Reflect.get(keyOptions, 'options') as FormOptions<T[keyof T], Form<T>>;
 
             return options
         }
@@ -36,7 +36,7 @@ export function builder<T>(config?: FormConfig<T>): FormBuilder<T> {
                 
                 const isRequired = !!options?.required;
 
-                let itemEmitter!: (item: FormItem<T[keyof T]>) => void;
+                const itemEmitters: ((item: FormItem<T[keyof T]>) => void)[] = [];
 
                 const FormItem = function(this: FormItem<IfRequired<T[keyof T], typeof isRequired>>) {
                     this.value = options?.value;
@@ -45,7 +45,7 @@ export function builder<T>(config?: FormConfig<T>): FormBuilder<T> {
                     this.invalid =  false;
                     this.error = [];
                     this.subscribe = (callback: (item: FormItem<T[keyof T]>) => void) => {
-                        itemEmitter = callback;
+                        itemEmitters.push(callback);
                     }
                 } as unknown as FormItemConstructor<T>
 
@@ -60,9 +60,10 @@ export function builder<T>(config?: FormConfig<T>): FormBuilder<T> {
                     set(itemTarget, prop, value) {
                         if (prop === "value") {
                             itemTarget.value = value && options?.transform ? options.transform(value) : value
+                            
                             if (options?.validate?.length && options?.validate.length > 0) {
                                 const result = options.validate.reduce((acc, cur) => {
-                                    acc.push([!cur.fn(itemTarget.value), cur.message]);
+                                    acc.push([!cur.fn(itemTarget.value, formTarget), cur.message]);
                                     return acc
                                 }, [] as [boolean, string?][]);
 
@@ -79,8 +80,8 @@ export function builder<T>(config?: FormConfig<T>): FormBuilder<T> {
                                 itemTarget.bindings.error.innerText = itemTarget.error.join(', ')
                             }
 
-                            if (itemEmitter != undefined) {
-                                itemEmitter(itemTarget)
+                            if (itemEmitters.length) {
+                                itemEmitters.forEach(emitter => emitter(itemTarget))
                             }
 
                             if (formEmitter != undefined) {
@@ -94,10 +95,16 @@ export function builder<T>(config?: FormConfig<T>): FormBuilder<T> {
                         return true
                     },
                 };
-    
-                const proxyItem = new Proxy(item, itemHandler);
 
+                const proxyItem = new Proxy(item, itemHandler);
                 formTarget[formKey as keyof T] = proxyItem;
+
+                options?.validate?.reduce((acc, cur) => acc.concat(cur.deps || []), [] as (keyof T)[]).forEach(dep => {
+                    form?.[dep].subscribe(() => {
+                        formTarget[formKey as keyof T].value = form[formKey as keyof T].value
+                    })
+                })
+    
                 return formTarget[formKey as keyof T];
             },
     

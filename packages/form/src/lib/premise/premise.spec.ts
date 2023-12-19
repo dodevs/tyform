@@ -2,8 +2,8 @@ import { FormOptions, FormOptionsChain } from "../../types";
 import { t } from './premise';
 import { describe, it, expect} from 'vitest';
 
-function GetOptions<T>(chain: FormOptionsChain<T>): FormOptions<T> {
-    const options = Reflect.get(chain, 'options') as FormOptions<T>;
+function GetOptions<T, O = undefined>(chain: FormOptionsChain<T, O>): FormOptions<T, O> {
+    const options = Reflect.get(chain, 'options') as FormOptions<T, O>;
     return options;
 }
 
@@ -12,7 +12,9 @@ describe('form item options', () => {
         const chain = t();
         const options = GetOptions(chain);
 
-        expect(options).toEqual({})
+        expect(options).toEqual({
+            dependents: {}
+        })
     });
 
     it('should have required option', () => {
@@ -48,6 +50,13 @@ describe('form item options', () => {
         const options = GetOptions(chain);
 
         expect(options.validate?.[0].message).toBe("Fail")
+    })
+
+    it('should have dependencies', () => {
+        const chain = t<string, { Teste: string, Teste1: string }>().validate(() => true, ['Teste1']);
+        const options = GetOptions(chain);
+
+        expect(options.validate?.[0].deps).toStrictEqual(['Teste1'])
     })
 
     it('Should have correlational error messages', () => {
