@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/dodevs/tyform/compare/form-v1.1.0...form-v1.2.0) (2023-12-19)
+
+
+### Features
+
+* allows using other properties in validation ([5f2e549](https://github.com/dodevs/tyform/commit/5f2e549a375dedacd3af5f759d4fb7909aa56507))
+
 # [1.1.0](https://github.com/dodevs/tyform/compare/form-v1.0.2...form-v1.1.0) (2023-11-23)
 
 
