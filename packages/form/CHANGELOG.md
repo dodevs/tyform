@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/dodevs/tyform/compare/form-v1.2.0...form-v1.2.1) (2023-12-20)
+
+
+### Bug Fixes
+
+* change event for other input types ([e979b71](https://github.com/dodevs/tyform/commit/e979b71c588d786b00083933b3d51d62e8a17bf7))
+
 # [1.2.0](https://github.com/dodevs/tyform/compare/form-v1.1.0...form-v1.2.0) (2023-12-19)
 
 
