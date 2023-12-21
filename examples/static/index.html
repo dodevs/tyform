@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script type="module" src="index.js"></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <form>
+    <form id="contact-form" _="on submit halt the event">
         <label>
             Name:
             <input id="name-input" name="Name" type="text">
@@ -30,7 +31,13 @@
             <small id="notification-errors"></small>
         </label>
 
-        <button type="button" id="form-submit">Submit</button>
+        <button _="
+            on input or change from <form/>
+                if (<input.invalid/>).length > 0
+                    add @disabled then exit
+                end
+                remove @disabled
+        " type="submit" id="form-submit">Submit</button>
     </form>
 </body>
 </html>
