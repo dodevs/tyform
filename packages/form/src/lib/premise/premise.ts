@@ -1,4 +1,4 @@
-import { Form, FormOptions, FormOptionsChain, FormOptionsChainConstructor, ValidationMap, WithBindErrorOption, WithValidationMessageOption } from '../../types';
+import type { Form, FormOptions, FormOptionsChain, FormOptionsChainConstructor, ValidationMap, WithBindErrorOption, WithValidationMessageOption } from '../../types';
 
 export const t = <T, O>(defaultValue: T | undefined = undefined): FormOptionsChain<T, O> => {
     const options: FormOptions<T, O> = {

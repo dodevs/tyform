@@ -1,4 +1,4 @@
-import { 
+import type { 
     Form, FormConstructor, FormConfig,
     FormBuilder, FormBuilderConstructor,
     FormItem, FormItemConstructor,
