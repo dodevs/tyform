@@ -121,15 +121,17 @@ export function builder<T>(config?: FormConfig<T>): FormBuilder<T> {
                 const options = getOptions(key as keyof T);
                 const input = options.bindings?.input;
                 if (input) {
-                    input.value = form[key as keyof T].value as string;
-                    if (input.type === 'input')
-                        input.addEventListener('input', () => {
-                            form[key as keyof T].value = input.value as T[keyof T];
-                        });
-                    else
-                        input.addEventListener('change', () => {
-                            form[key as keyof T].value = (input.type === "checkbox" ? input.checked : input.value) as T[keyof T];
-                        });
+                    const setFormFromInput = () =>
+                        form[key as keyof T].value = (input.type === 'checkbox' ? input.checked : input.value) as T[keyof T];
+                    
+                    if (input.type === 'checkbox' || input.type === 'radio') {
+                        input.checked = form[key as keyof T].value as boolean;
+                        input.addEventListener('change', setFormFromInput);
+                    }
+                    else {
+                        input.value = form[key as keyof T].value as string;
+                        input.addEventListener('input', setFormFromInput);
+                    } 
                 }
                     
             })
