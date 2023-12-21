@@ -1,4 +1,4 @@
-import { cpSync } from 'fs'
+import { cpSync, rmSync } from 'fs'
 import devkit from '@nx/devkit'
 const { readCachedProjectGraph} = devkit;
 
@@ -29,6 +29,8 @@ buildOutputs.forEach(out => {
 
 if (outputs.length === 0)
     throw new Error('Project don\'t have outputs')
+
+rmSync(to, { recursive: true })
 
 outputs.forEach(out => {
     cpSync(out, to, { recursive: true })
