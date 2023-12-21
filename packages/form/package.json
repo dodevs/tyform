@@ -1,6 +1,6 @@
 {
   "name": "@tyform/form",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "tyform is a simple framework agnostic form build ",
   "private": false,
   "type": "module",
