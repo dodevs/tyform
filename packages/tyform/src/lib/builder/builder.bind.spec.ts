@@ -2,8 +2,8 @@
 
 import { describe, it, expect } from 'vitest';
 import { html, render } from 'lit';
-import { builder } from './builder';
-import { string } from '../premise/premise';
+import { builder } from '.';
+import { string } from '../premise';
 
 interface Contact {
   Name: string;

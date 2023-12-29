@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { builder } from './builder';
-import { string } from '../premise/premise';
+import { builder } from '.';
+import { string } from '../premise';
 import { Form } from '../../types';
 
 interface Contact {

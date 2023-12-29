@@ -1,5 +1,5 @@
+import { t } from '.';
 import { FormOptions, FormOptionsChain } from '../../types';
-import { t } from './premise';
 import { describe, it, expect } from 'vitest';
 
 function GetOptions<T, O = undefined>(
