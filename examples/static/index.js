@@ -1,10 +1,10 @@
-//import { builder, string, boolean } from './tyform/index.js';
-import { builder, string, boolean } from 'https://www.unpkg.com/@tyform/form';
+import { builder, string, boolean } from './tyform/index.js';
+// import { builder, string, boolean } from 'https://www.unpkg.com/@tyform/form';
 
 const phone_rgx = /(\d{2})(\d)(\d{4})(\d{4})/;
 const email_rgx = /([\w_.]+)@(\w+\.\w+)/;
 
-const tyform = builder({
+const contactForm = builder({
     Name: string()
         .value('João Miguel')
         .bind("#name-input").withErrorOn("#name-errors")
@@ -24,11 +24,4 @@ const tyform = builder({
             .withMessage("You must have an email or phone number to receive notifications")
 });
 
-document.querySelector('#contact-form').addEventListener('submit', () => {
-    const values = tyform.values();
-
-    fetch('/api/Contact', { method: 'POST', body: JSON.stringify(values) })
-        .then(data => console.log(data))
-        .catch(err => console.log(err))
-})
-
+window.contactForm = contactForm
