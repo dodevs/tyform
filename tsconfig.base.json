@@ -15,8 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "tyform": ["packages/form/src/index.ts"],
-      "tyform/types": ["packages/form/src/types/index.ts"]
+      "tyform": ["packages/tyform/src/index.ts"],
+      "tyform/types": ["packages/tyform/src/types/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

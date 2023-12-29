@@ -29,7 +29,7 @@ export default defineConfig({
     lib: {
       // Could also be a dictionary or array of multiple entry points.
       entry: 'src/index.ts',
-      name: 'form',
+      name: 'tyform',
       fileName: 'index',
       // Change this to the formats you want to support.
       // Don't forget to update your package.json as well.
@@ -39,13 +39,13 @@ export default defineConfig({
       // External packages that should not be bundled into your library.
       external: [],
       output: {
-        esModule: true
-      }
+        esModule: true,
+      },
     },
     sourcemap: true,
     commonjsOptions: {
-      sourceMap: true
-    }
+      sourceMap: true,
+    },
   },
 
   test: {

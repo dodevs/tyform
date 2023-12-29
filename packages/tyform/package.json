@@ -1,6 +1,6 @@
 {
-  "name": "@tyform/form",
-  "version": "1.2.1",
+  "name": "tyform",
+  "version": "0.0.0",
   "description": "tyform is a simple framework agnostic form build ",
   "private": false,
   "type": "module",
@@ -14,14 +14,17 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/dodevs/tyform",
-    "directory": "packages/form"
+    "directory": "packages/tyform"
   },
   "exports": {
-    ".": "./index.js",
-    "./types": "./types/index.d.ts"
+    ".": {
+      "default": "./index.js",
+      "types": "./index.d.ts"
+    },
+    "./types": {
+      "types": "./types/index.d.ts"
+    },
+    "./package.json": "./package.json"
   },
-  "dependencies": {},
-  "main": "./index.js",
-  "module": "./index.js",
-  "typings": "./index.d.ts"
+  "dependencies": {}
 }
