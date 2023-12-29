@@ -42,6 +42,6 @@ jobs:
         run: npm install
 
       - name: Release
-        run: npx nx run form:semantic-release
+        run: npx nx run tyform:semantic-release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
