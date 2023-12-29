@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { builder as tyform, string, boolean } from 'tyform'
+import { builder as tyform, string, boolean } from 'tyform';
 import type { Form, FormBuilder } from 'tyform/types';
 
 @Component({
@@ -10,7 +10,6 @@ import type { Form, FormBuilder } from 'tyform/types';
   imports: [CommonModule, FormsModule],
   template: `
     <style>
-
       :root {
         --error-color: rgb(255, 75, 75);
       }
@@ -52,16 +51,21 @@ import type { Form, FormBuilder } from 'tyform/types';
     <form>
       <ng-container *ngFor="let key of stringKeys">
         <label>
-          {{key}}:
-          <input [class.invalid]="form[key].invalid" [name]="key" [(ngModel)]="form[key].value" type="text"/>
-          <small>{{form[key].error.join(', ')}}</small>
+          {{ key }}:
+          <input
+            [class.invalid]="form[key].invalid"
+            [name]="key"
+            [(ngModel)]="form[key].value"
+            type="text"
+          />
+          <small>{{ form[key].error.join(', ') }}</small>
         </label>
       </ng-container>
       <ng-container *ngFor="let key of booleanKeys">
         <label>
-          {{key}}
-          <input [name]="key" [(ngModel)]="form[key].value" type="checkbox" >
-          <small>{{form[key].error.join(', ')}}</small>
+          {{ key }}
+          <input [name]="key" [(ngModel)]="form[key].value" type="checkbox" />
+          <small>{{ form[key].error.join(', ') }}</small>
         </label>
       </ng-container>
       <!-- <label>
@@ -99,36 +103,49 @@ export class TyformExampleComponent implements OnInit {
   public booleanKeys!: (keyof Contact)[];
 
   public get isFormInvalid() {
-    return Object.values(this.form).reduce((acc, cur) => cur.invalid || acc, false)
+    return Object.values(this.form).reduce(
+      (acc, cur) => cur.invalid || acc,
+      false
+    );
   }
 
   ngOnInit(): void {
-
     this.buider = tyform<Contact>({
-      Name: string()
-        .required("Name is required"),
+      Name: string().required('Name is required'),
       Phone: string()
-        .validate((value) => this.PHONE_RGX.test(value)).withMessage('Phone format is invalid'),
+        .validate((value) => this.PHONE_RGX.test(value))
+        .withMessage('Phone format is invalid'),
       Email: string()
-        .validate(value => this.EMAIL_RGX.test(value)).withMessage('Email format is invalid'),
+        .validate((value) => this.EMAIL_RGX.test(value))
+        .withMessage('Email format is invalid'),
       Notification: boolean<Contact>()
-        .validate((value, target) =>  value && (!!target?.Email.value || !!target?.Phone.value ), ['Email', 'Phone'])
-        .withMessage("You must have an email or phone number to receive notifications")
+        .validate(
+          (value, target) =>
+            value && (!!target?.Email.value || !!target?.Phone.value),
+          ['Email', 'Phone']
+        )
+        .withMessage(
+          'You must have an email or phone number to receive notifications'
+        ),
     }).init({
       Name: 'João Miguel',
       Phone: '27998765432',
       Email: 'jao.miguel@hotmail.com',
-      Notification: false
-    })
+      Notification: false,
+    });
 
     this.form = this.buider.build();
-    this.booleanKeys = Object.entries(this.form).filter(([_, value]) => typeof value.value === 'boolean').map(([key]) => key as keyof Contact)
-    this.stringKeys = Object.entries(this.form).filter(([_, value]) => typeof value.value === 'string').map(([key]) => key as keyof Contact)
+    this.booleanKeys = Object.entries(this.form)
+      .filter(([_, value]) => typeof value.value === 'boolean')
+      .map(([key]) => key as keyof Contact);
+    this.stringKeys = Object.entries(this.form)
+      .filter(([_, value]) => typeof value.value === 'string')
+      .map(([key]) => key as keyof Contact);
   }
 
   submit() {
     const values = this.buider.values();
-    console.log(values)
+    console.log(values);
   }
 }
 

@@ -1,6 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import type { FormItem } from 'packages/form/src/types';
+import type { FormItem } from 'tyform/types';
 
 @customElement('ty-error')
 export class TyError<T = unknown> extends LitElement {
